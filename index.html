@@ -81,7 +81,7 @@ footer{padding:20px 0;border-top:1px solid var(--line);background:#fff}footer .w
 <div class="chips"><span class="chip">⌂ Home &amp; repair</span><span class="chip">✧ Events</span><span class="chip">▧ Photography</span><span class="chip">⌁ Professional</span><span class="chip">↗ Logistics</span></div>
 <div class="row"><button class="btn primary" data-login>Explore VendorVerse →</button><button class="btn" data-login>Sign in</button></div>
 <p class="tiny">Browser-only prototype · No real authentication, billing or service payments</p></div>
-<div class="art"><img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80" alt="A beautifully arranged celebration dinner" onerror="this.style.display='none'">
+<div class="art"><img id="heroImg" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=80" alt="A beautifully arranged celebration dinner" onerror="this.onerror=null;window.vvArt&&(this.src=window.vvArt())">
 <div class="fc f1"><span class="pill ok">✓ Verified profile</span> ★ 4.9<br><strong>Local talent, thoughtfully found</strong></div><div class="fc f2"><div class="kick">Your marketplace</div><strong>Discover · Compare · Connect</strong></div></div></section>
 
 <section class="stats" aria-label="Sample marketplace data"><div class="stat"><b id="s1">0</b><span>Sample vendor listings</span></div><div class="stat"><b id="s2">0</b><span>Service categories</span></div><div class="stat"><b>12k+</b><span>Sample bookings</span></div><div class="stat"><b id="s4">-</b><span>Sample review average</span></div></section>
@@ -117,6 +117,13 @@ const cats=['Home Services','Construction','Events & Catering','Professional Ser
 const icons=['⌂','▦','✧','⌁','◈','▤','↗','◐','✚','❀','▧','◇'],tiles=[['#dcdcff','#c7f3e5'],['#f5d5fa','#f5c8ef'],['#ffe3a6','#fff0bd'],['#b8e8f3','#a8f4f0'],['#ffc6c8','#f9b0bd'],['#d3d7ff','#d8d2ff']];
 const vendors=[['TechNova Solutions','IT & Digital','Pune','₹25,000–1,20,000 / unit',4.8,1200,'#2b7de9','#13a79b'],['Saffron & Sage Catering','Events & Catering','Pune','₹850–1,600 / guest',4.8,126,'#d6409f','#4a4ac0'],['The Lens House','Photography','Mumbai','Quote required',4.9,84,'#1b8aa0','#2e9e6b'],['Studio Neem Interiors','Design & Architecture','Jaipur','₹1,200 / sq ft onward',4.7,52,'#2e9e6b','#13a79b'],['SwiftRoute Logistics','Logistics','Delhi','Quote required',4.6,31,'#4a4ac0','#2b7de9'],['Kindred Home Care','Home Services','Bengaluru','Quote required',4.6,29,'#13a79b','#1b8aa0']].map(a=>({n:a[0],c:a[1],city:a[2],price:a[3],r:a[4],rev:a[5],c1:a[6],c2:a[7]}));
 let scope='services';
+/* Embedded celebration-table artwork: used when the remote hero photo cannot load */
+function heroArt(){
+  const bulbs=[60,170,280,390,510,620,730,840].map((x,i)=>`<circle cx="${x}" cy="${[110,148,160,132,132,160,148,110][i]}" r="9" fill="#ffd98a"/>`).join('');
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 860"><defs><linearGradient id="w" x2="0" y2="1"><stop stop-color="#cfe9e5"/><stop offset="1" stop-color="#f6fafb"/></linearGradient><linearGradient id="f" x2="0" y2="1"><stop stop-color="#54a99f"/><stop offset="1" stop-color="#0b7180"/></linearGradient></defs><rect width="900" height="860" fill="url(#w)"/><rect y="590" width="900" height="270" fill="url(#f)"/><path d="M0 590h900" stroke="#fff" stroke-width="8" opacity=".6"/><circle cx="720" cy="270" r="78" fill="#fff2d0" opacity=".9"/><path d="M120 520V260q0-80 80-80h130q80 0 80 80v260z" fill="#fff" opacity=".7"/><path d="M265 180v340M120 350h290" stroke="#fff" stroke-width="12" opacity=".9"/><path d="M0 90Q225 200 450 100T900 90" fill="none" stroke="#0b7180" stroke-width="4" opacity=".35"/>${bulbs}<ellipse cx="470" cy="740" rx="340" ry="46" fill="#193543" opacity=".18"/><path d="M190 640h560l-60 90H250z" fill="#8a5f47"/><path d="M270 725l-28 110M670 725l28 110" stroke="#6d4a3b" stroke-width="20" stroke-linecap="round"/><ellipse cx="470" cy="640" rx="290" ry="48" fill="#f7e7ce"/><g fill="#fff" stroke="#e2cfa8" stroke-width="3"><circle cx="300" cy="644" r="34"/><circle cx="470" cy="652" r="34"/><circle cx="640" cy="644" r="34"/></g><g fill="#e1c28e"><circle cx="300" cy="644" r="18"/><circle cx="470" cy="652" r="18"/><circle cx="640" cy="644" r="18"/></g><path d="M470 600q-34-80 6-115m-6 115q50-84 88-70m-90 74q-62-62-96-40" fill="none" stroke="#2e9e6b" stroke-width="11" stroke-linecap="round"/><circle cx="476" cy="478" r="17" fill="#e99b91"/><circle cx="560" cy="516" r="17" fill="#edbd69"/><circle cx="376" cy="540" r="17" fill="#a48fd5"/><rect x="372" y="560" width="10" height="54" rx="4" fill="#fff"/><rect x="560" y="566" width="10" height="48" rx="4" fill="#fff"/><circle cx="377" cy="552" r="7" fill="#ffb347"/><circle cx="565" cy="558" r="7" fill="#ffb347"/></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+window.vvArt=heroArt;
 function render(){
   $('#lc').innerHTML='<option value="">All categories</option>'+cats.map(c=>`<option>${esc(c)}</option>`).join('');
   const tr=cats.map((c,i)=>`<button class="cat" type="button" data-cat="${esc(c)}" style="--a:${tiles[i%6][0]};--b:${tiles[i%6][1]}"><i>${icons[i]}</i><b>${esc(c)}</b><small>Browse sample providers</small></button>`).join('');
@@ -191,6 +198,7 @@ document.addEventListener('submit',e=>{
     enterWorkspace('customer',{name:d.name.trim(),email:d.email.trim().toLowerCase(),phone:d.phone.trim(),fresh:true})}
 });
 render();
+{const hi=$('#heroImg');if(hi&&hi.complete&&!hi.naturalWidth)hi.src=heroArt()}
 })();
 </script>
 </body></html>
